@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+
+    /**
+     * Загрузка плагина shadowJar для создания программы
+     * которая будет содержать в себе все библиотеки,
+     * которые необходимы для ее работы
+     */
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+}
+
+group 'net.dazay.code'
+version '0.1.1-zelenka'
+
+repositories {
+    mavenCentral() //Подключение репозитория Maven Central для загрузки библиотек
+}
+
+dependencies {
+    //Загрузка библиотеки sqlite-jdbc
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.45.1.0'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'net.dazay.code.ProgramStart' //Настройка манифеста
+    }
+}
+
+shadowJar {
+    archiveBaseName.set('LibraryManager')
+    archiveClassifier.set('')
+    manifest {
+        attributes 'Main-Class': 'net.dazay.code.ProgramStart' // Настройка манифеста для плагина
+    }
+}
