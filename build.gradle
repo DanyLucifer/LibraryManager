@@ -31,6 +31,12 @@ jar {
     }
 }
 
+task makeExecutable(type: Exec) {
+    commandLine 'chmod', '+x', 'gradlew'
+}
+
+tasks.shadowJar.dependsOn makeExecutable
+
 shadowJar {
     archiveBaseName.set('LibraryManager')
     archiveClassifier.set('')
